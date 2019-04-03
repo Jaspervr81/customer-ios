@@ -34,7 +34,7 @@
         _attributionLabel.backgroundColor = [UIColor clearColor];
         _attributionLabel.textColor = [KUSColor darkGrayColor];
         _attributionLabel.font = [UIFont systemFontOfSize:9.0];
-        [self addSubview:_attributionLabel];
+       // [self addSubview:_attributionLabel];
     }
     return self;
 }
