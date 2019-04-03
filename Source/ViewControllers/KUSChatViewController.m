@@ -166,8 +166,8 @@
     self.fauxNavigationBar.delegate = self;
     [self.fauxNavigationBar setSessionId:_chatSessionId];
     [self.fauxNavigationBar setShowsLabels:YES];
-    [self.fauxNavigationBar setShowsBackButton:_showBackButton];
-    [self.fauxNavigationBar setShowsDismissButton:YES];
+    [self.fauxNavigationBar setShowsBackButton:NO];//_showBackButton];
+    [self.fauxNavigationBar setShowsDismissButton:NO];
     [self.view addSubview:self.fauxNavigationBar];
 
     self.inputBarView = [[KUSInputBar alloc] initWithUserSession:_userSession];
