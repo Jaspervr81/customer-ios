@@ -179,7 +179,7 @@
     [self.fauxNavigationBar setShowsLabels:YES];
     [self.fauxNavigationBar setShowsBackButton:NO];//_showBackButton];
     [self.fauxNavigationBar setShowsDismissButton:NO];
-    [self.view addSubview:self.fauxNavigationBar];
+ //   [self.view addSubview:self.fauxNavigationBar];
 
     self.inputBarView = [[KUSInputBar alloc] initWithUserSession:_userSession];
     self.inputBarView.delegate = self;
