@@ -182,14 +182,14 @@ customerDescription.custom = @{ @"customAttributeStr": @"value" };
 
 ```objective-c
 /*
- Return the current count of un-read messages. It might not be immediately available. 
+ Return the current count of un-read messages. It might not be immediately available.
 */
 [Kustomer unreadMessageCount];
 ```
 
 ```objective-c
 /*
- Override the conversation form directly from the sdk by setting the form id. 
+ Override the conversation form directly from the sdk by setting the form id.
 */
 [Kustomer setFormId:FORM_ID];
 ```
