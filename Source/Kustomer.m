@@ -56,7 +56,7 @@ static NSString *kKustomerOrgNameKey = @"orgName";
     [[self sharedInstance] describeCustomer:customerDescription];
 }
 
-+ (void)identify:(nonnull NSString *)externalToken callback:(void (^_Nullable)(BOOL success))handler;
++ (void)identify:(nonnull NSString *)externalToken callback:(void (^_Nullable)(NSError *error))handler;
 {
   [[self sharedInstance] identify:externalToken callback:handler];
 }
@@ -289,7 +289,7 @@ static KUSLogOptions _logOptions = KUSLogOptionInfo | KUSLogOptionErrors;
     [self.userSession describeCustomer:customerDescription completion:nil];
 }
 
-- (void)identify:(nonnull NSString *)externalToken callback:(void (^_Nullable)(BOOL success))handler
+- (void)identify:(nonnull NSString *)externalToken callback:(void (^_Nullable)(NSError *error))handler
 {
     NSAssert(externalToken, @"Kustomer expects externalToken to be non-nil");
     if (externalToken == nil) {
@@ -305,7 +305,7 @@ static KUSLogOptions _logOptions = KUSLogOptionInfo | KUSLogOptionErrors;
      completion:^(NSError *error, NSDictionary *response) {
        [weakUserSession.trackingTokenDataSource fetch];
        if (handler)  {
-         handler(error == nil);
+         handler(error);
        }
      }];
 }
