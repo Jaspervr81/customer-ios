@@ -1,6 +1,6 @@
 # Changelog for Kustomer iOS SDK'
 
-## 0.2.3.1
+## 0.2.3.2
 Release Date: 06/28/2019
 
 * Wrap chat Greeting text to 2 lines and truncate past that. 
