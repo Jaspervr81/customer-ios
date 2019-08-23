@@ -18,6 +18,13 @@ FOUNDATION_EXPORT const unsigned char KustomerVersionString[];
 @protocol KustomerDelegate;
 @interface Kustomer : NSObject
 
+
+
++ (BOOL) shouldShowNotificationBanner;
++ (void) setShouldShowNotificationBanner:(BOOL)show;
++ (__weak id<KustomerDelegate>)delegate;
+
+
 + (void)initializeWithAPIKey:(NSString *)apiKey;
 + (void)setDelegate:(__weak id<KustomerDelegate>)delegate;
 
@@ -28,6 +35,7 @@ FOUNDATION_EXPORT const unsigned char KustomerVersionString[];
 + (void)resetTracking;
 
 + (void)setCurrentPageName:(NSString *)currentPageName;
++ (void)setShouldShowNotificationBanner:(BOOL)show;
 
 + (void)printLocalizationKeys;
 + (void)registerLocalizationTableName:(NSString *)table;
@@ -57,6 +65,7 @@ FOUNDATION_EXPORT const unsigned char KustomerVersionString[];
 // The current SDK version
 + (NSString *)sdkVersion;
 
+
 // Show/Hide new conversation button in closed chat
 + (void)hideNewConversationButtonInClosedChat:(BOOL)status;
 
@@ -66,6 +75,8 @@ FOUNDATION_EXPORT const unsigned char KustomerVersionString[];
 @end
 
 @protocol KustomerDelegate <NSObject>
+
+- (void)didRequestEnablePushNotifications;
 
 @optional
 
