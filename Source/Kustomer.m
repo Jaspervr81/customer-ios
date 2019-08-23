@@ -25,9 +25,20 @@ static NSString *kKustomerOrgNameKey = @"orgName";
 @property (nonatomic, copy, readwrite) NSString *orgId;
 @property (nonatomic, copy, readwrite) NSString *orgName;
 
+
 @end
 
 @implementation Kustomer
+
+static BOOL shouldShowNotificationBanner;
+
++ (void)setShouldShowNotificationBanner:(BOOL)show {
+    shouldShowNotificationBanner = show;
+}
+
++ (BOOL)shouldShowNotificationBanner {
+    return shouldShowNotificationBanner;
+}
 
 #pragma mark - Class methods
 
@@ -39,6 +50,11 @@ static NSString *kKustomerOrgNameKey = @"orgName";
 + (void)setDelegate:(__weak id<KustomerDelegate>)delegate
 {
     [[self sharedInstance] setDelegate:delegate];
+}
+
++ (__weak id<KustomerDelegate>)delegate
+{
+    return [[self sharedInstance] delegate];
 }
 
 + (void)describeConversation:(NSDictionary<NSString *, NSObject *> *)customAttributes

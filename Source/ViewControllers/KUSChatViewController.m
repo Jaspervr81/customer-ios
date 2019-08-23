@@ -60,7 +60,7 @@
     NSString *_chatSessionId;
     KUSChatMessagesDataSource *_chatMessagesDataSource;
     KUSTypingIndicator *_typingIndicator;
-
+                                         NSLayoutConstraint *notificationBannerHeightConstraint;
     KUSTeamsDataSource *_teamOptionsDataSource;
     BOOL _showSatisfactionForm;
     CGFloat _keyboardHeight;
@@ -69,13 +69,10 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *nonBusinessHourImageView;
-@property (nonatomic, strong) KUSEmailInputView *emailInputView;
 @property (nonatomic, strong) KUSInputBar *inputBarView;
 @property (nonatomic, strong) KUSOptionPickerView *optionPickerView;
-@property (nonatomic, strong) KUSNavigationBarView *fauxNavigationBar;
 @property (nonatomic, strong) KUSClosedChatView *closedChatView;
 @property (nonatomic, strong) KUSNewSessionButton *sessionButton;
-@property (nonatomic, strong) KUSEndChatButtonView *closeChatButtonView;
 @property (nonatomic, strong) KUSMLFormValuesPickerView *mlFormValuesPickerView;
 @property (nonatomic, strong) NYTPhotoViewerArrayDataSource *nytPhotosDataSource;
 
@@ -140,15 +137,36 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
     self.edgesForExtendedLayout = UIRectEdgeTop;
+    
+    CGFloat notificationBannerHeight = 0;
+    if ([Kustomer shouldShowNotificationBanner]) {
+        notificationBannerHeight = 66;
+    }
+    
+    UIView *notificationsBanner = (UIView*)[[UINib nibWithNibName:@"PushNotificationsBanner" bundle:[NSBundle bundleForClass:[self class]]] instantiateWithOwner:self options:nil][0];
+    [notificationsBanner setFrame:CGRectMake(0, 0, self.view.frame.size.width, notificationBannerHeight)];
+    
+    
+    [notificationsBanner setTranslatesAutoresizingMaskIntoConstraints:false];
+    [self.view addSubview:notificationsBanner];
+    notificationBannerHeightConstraint = [notificationsBanner.heightAnchor constraintEqualToConstant:notificationBannerHeight];
+    [notificationBannerHeightConstraint setActive:true];
+    [[notificationsBanner.topAnchor constraintEqualToAnchor:self.view.topAnchor] setActive:true];
+    [[notificationsBanner.leftAnchor constraintEqualToAnchor:self.view.leftAnchor] setActive:true];
+    [[notificationsBanner.rightAnchor constraintEqualToAnchor:self.view.rightAnchor] setActive:true];
 
     self.tableView = [[KUSChatTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
+    [self.tableView setTranslatesAutoresizingMaskIntoConstraints:false];
     self.tableView.scrollsToTop = YES;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.tableView.transform = CGAffineTransformMakeScale(1.0, -1.0);
     [self.view addSubview:self.tableView];
+    [[self.tableView.topAnchor constraintEqualToAnchor:notificationsBanner.bottomAnchor] setActive:true];
+    [[notificationsBanner.bottomAnchor constraintEqualToAnchor:self.tableView.topAnchor] setActive:true];
+    [[self.tableView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor] setActive:true];
+    [[self.tableView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor] setActive:true];
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 110000
     if (@available(ios 11.0, *)) {
@@ -174,20 +192,15 @@
     [self.view addSubview:self.nonBusinessHourImageView];
     
     self.navigationController.interactivePopGestureRecognizer.enabled = _showBackButton;
-    self.fauxNavigationBar = [[KUSNavigationBarView alloc] initWithUserSession:_userSession];
-    self.fauxNavigationBar.delegate = self;
-    [self.fauxNavigationBar setSessionId:_chatSessionId];
-    [self.fauxNavigationBar setShowsLabels:YES];
-    [self.fauxNavigationBar setShowsBackButton:NO];//_showBackButton];
-    [self.fauxNavigationBar setShowsDismissButton:NO];
- //   [self.view addSubview:self.fauxNavigationBar];
-
+    
     self.inputBarView = [[KUSInputBar alloc] initWithUserSession:_userSession];
     self.inputBarView.delegate = self;
     self.inputBarView.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
     
     self.inputBarView.allowsAttachments = [_chatMessagesDataSource shouldAllowAttachments];
     [self.view addSubview:self.inputBarView];
+    [[self.tableView.bottomAnchor constraintEqualToAnchor:self.inputBarView.topAnchor] setActive:true];
+
 
     [_chatMessagesDataSource addListener:self];
     [_chatMessagesDataSource fetchLatest];
@@ -208,10 +221,9 @@
                                                    object:nil];
     }
 
-    [self _checkShouldShowEmailInput];
     [self _checkShouldUpdateInputView];
-    [self _checkShouldShowCloseChatButtonView];
 
+    
     // Force layout so that animated presentations start from the right state
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
@@ -254,10 +266,6 @@
 {
     [super viewWillLayoutSubviews];
 
-    [self.fauxNavigationBar setExtraLarge:_chatMessagesDataSource.count == 0];
-    self.fauxNavigationBar.topInset = self.edgeInsets.top;
-    CGFloat navigationBarHeight = [self.fauxNavigationBar desiredHeight];
-
     CGFloat inputBarHeight = [self.inputBarView desiredHeight];
     CGFloat inputBarY = self.view.bounds.size.height - MAX(self.edgeInsets.bottom, _keyboardHeight) - inputBarHeight;
     self.inputBarView.frame = (CGRect) {
@@ -296,26 +304,10 @@
         .size.height = 50.0
     };
 
-    self.fauxNavigationBar.frame = (CGRect) {
-        .size.width = self.view.bounds.size.width,
-        .size.height = navigationBarHeight
-    };
-
     // Hide the email input view in landscape to save space on iPhones
     BOOL isIphone = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone;
     BOOL isLandscape = UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation);
-    CGFloat emailInputHeight = (isIphone && isLandscape ? 0.0 : 80.0);
-    self.emailInputView.frame = (CGRect) {
-        .origin.y = self.fauxNavigationBar.frame.size.height,
-        .size.width = self.view.bounds.size.width,
-        .size.height = emailInputHeight
-    };
 
-    self.closeChatButtonView.frame = (CGRect) {
-        .origin.y = self.fauxNavigationBar.frame.size.height,
-        .size.width = self.view.bounds.size.width,
-        .size.height = 46
-    };
     
     // Update table view frame if "Start New Conversation" is hidden
     KUSChatSession *session = [_userSession.chatSessionsDataSource objectWithId:[self getValidChatSessionId]];
@@ -327,20 +319,21 @@
     };
 
     self.tableView.contentInset = (UIEdgeInsets) {
-        .top = 4.0,
-        .bottom = navigationBarHeight + MAX(self.emailInputView.frame.size.height, self.closeChatButtonView.frame.size.height) + 4.0
+        .top = 4,
+        .bottom = 4
     };
     self.tableView.scrollIndicatorInsets = (UIEdgeInsets) {
-        .bottom = navigationBarHeight + self.emailInputView.frame.size.height
+        .bottom = 0
     };
     
-    CGFloat nonBusinessHourImagePadding = 50;
-    self.nonBusinessHourImageView.frame = (CGRect) {
-        .origin.x = nonBusinessHourImagePadding,
-        .origin.y = self.fauxNavigationBar.frame.size.height + nonBusinessHourImagePadding,
-        .size.width = self.view.bounds.size.width - (nonBusinessHourImagePadding * 2),
-        .size.height = self.view.bounds.size.height - self.fauxNavigationBar.frame.size.height - 50 - (nonBusinessHourImagePadding * 2)
-    };
+
+}
+- (IBAction)handleEnableNotificationsTapped:(id)sender {
+    [notificationBannerHeightConstraint setConstant:0];
+    [UIView animateWithDuration:0.25 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+    [[Kustomer delegate] didRequestEnablePushNotifications];
 }
 
 #pragma mark - Internal logic methods
@@ -350,53 +343,7 @@
     return [_chatSessionId isEqual:kKUSTempSessionId] ? nil : _chatSessionId;
 }
 
-- (void)_checkShouldShowCloseChatButtonView
-{
-    KUSChatSettings *settings = [_userSession.chatSettingsDataSource object];
-    if (settings != nil && settings.closableChat) {
-        if ([self getValidChatSessionId]) {
-            KUSChatSession *session = [_userSession.chatSessionsDataSource objectWithId:[self getValidChatSessionId]];
-            if (!session.lockedAt) {
-                if ([_chatMessagesDataSource isAnyMessageByCurrentUser]) {
-                    if (!self.closeChatButtonView) {
-                        self.closeChatButtonView = [[KUSEndChatButtonView alloc] init];
-                        self.closeChatButtonView.delegate = self;
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                            [self.view addSubview:self.closeChatButtonView];
-                            [self.view setNeedsLayout];
-                        });
-                    }
-                    return;
-                }
-            }
-        }
-    }
-    
-    [self.closeChatButtonView removeFromSuperview];
-    self.closeChatButtonView = nil;
-    [self.view setNeedsLayout];
-}
 
-- (void)_checkShouldShowEmailInput
-{
-    KUSChatSettings *settings = [_userSession.chatSettingsDataSource object];
-    BOOL isChatCloseable = settings != nil && settings.closableChat;
-    BOOL shouldShowEmailInput = [_userSession shouldCaptureEmail] &&
-                                [self getValidChatSessionId] != nil &&
-                                !isChatCloseable;
-    if (shouldShowEmailInput) {
-        if (self.emailInputView == nil) {
-            self.emailInputView = [[KUSEmailInputView alloc] init];
-            self.emailInputView.delegate = self;
-            [self.view addSubview:self.emailInputView];
-            [self.view setNeedsLayout];
-        }
-    } else {
-        [self.emailInputView removeFromSuperview];
-        self.emailInputView = nil;
-        [self.view setNeedsLayout];
-    }
-}
 
 - (void)_showMLFormValuePickerWithValue:(KUSMLFormValue *)mlFormValue
 {
@@ -672,9 +619,6 @@
     [self.sessionButton removeFromSuperview];
     self.sessionButton = nil;
     
-    [self.fauxNavigationBar setSessionId:_chatSessionId];
-    [self _checkShouldShowEmailInput];
-    [self _checkShouldShowCloseChatButtonView];
     [self _checkShouldUpdateInputView];
     
     [UIView animateWithDuration:0.2 animations:^{
@@ -707,7 +651,6 @@
 {
     if (dataSource == _chatMessagesDataSource) {
         [self hideLoadingIndicator];
-        [self _checkShouldShowCloseChatButtonView];
         
         [self.tableView reloadData];
         
@@ -721,7 +664,6 @@
     if (dataSource == _chatMessagesDataSource) {
         [self.tableView reloadData];
         [self _checkShouldUpdateInputView];
-        [self _checkShouldShowCloseChatButtonView];
         [self _checkShouldDisconnectTypingListener];
         
         [self.view setNeedsLayout];
@@ -759,15 +701,11 @@
 {
     _chatSessionId = sessionId;
     self.inputBarView.allowsAttachments = [self getValidChatSessionId] != nil;
-    [self.fauxNavigationBar setSessionId:_chatSessionId];
     
     KUSChatSettings *chatSettings = [[_userSession chatSettingsDataSource] object];
     _showBackButton = !chatSettings.noHistory;
 
     self.navigationController.interactivePopGestureRecognizer.enabled = _showBackButton;
-    [self.fauxNavigationBar setShowsBackButton:_showBackButton];
-    [self _checkShouldShowEmailInput];
-    [self _checkShouldShowCloseChatButtonView];
     [_chatMessagesDataSource startListeningForTypingUpdate];
     
     [self.view setNeedsLayout];
@@ -790,7 +728,6 @@
     if (dataSource == _chatMessagesDataSource) {
         [self.tableView reloadData];
         [self _checkShouldUpdateInputView];
-        [self _checkShouldShowCloseChatButtonView];
         [self _checkShouldDisconnectTypingListener];
         [self.view setNeedsLayout];
     }
@@ -1110,7 +1047,6 @@
 - (void)emailInputView:(KUSEmailInputView *)inputView didSubmitEmail:(NSString *)email
 {
     [_userSession submitEmail:email];
-    [self _checkShouldShowEmailInput];
 }
 
 #pragma mark - KUSOptionPickerViewDelegate methods
