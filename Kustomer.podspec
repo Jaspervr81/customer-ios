@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name = 'Kustomer'
   s.authors = 'Kustomer.com'
   s.summary = 'The iOS SDK for the Kustomer.com mobile client'
-  s.version = '0.2.3.5'
+  s.version = '0.2.3.6'
   s.ios.deployment_target = '9.0'
 
   s.homepage = 'https://github.com/kustomer/customer-ios.git'
@@ -18,8 +18,8 @@ Pod::Spec.new do |s|
   s.dependency 'NYTPhotoViewer', '~> 2.0.0'
   s.dependency 'SpinKit', '~> 1.1'
 
-  s.resources = ['Source/**/*.{png,m4a}', 'Source/Strings.bundle']
-  s.source_files = 'Source/**/*.{h,m}'
+  s.resources = ['Source/**/*.{png,m4a,otf}', 'Source/Strings.bundle']
+  s.source_files = 'Source/**/*.{h,m,xib}'
   s.requires_arc = true
   s.framework = 'UIKit'
 end
