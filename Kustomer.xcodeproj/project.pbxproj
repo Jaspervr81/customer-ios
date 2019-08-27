@@ -163,6 +163,15 @@
 		63F61A7E1FFAC86400E56766 /* KUSMultipleAvatarsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F61A7C1FFAC86400E56766 /* KUSMultipleAvatarsView.m */; };
 		6D7CDE24CE12E0916484305C /* Pods_Kustomer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4074C2A1E9213757162ED660 /* Pods_Kustomer.framework */; };
 		7C3913946A295179BE2E925B /* Pods_KustomerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D624913E5C7AD4492EF0D39B /* Pods_KustomerTests.framework */; };
+		ACE16E63231584E70077B23D /* PushNotificationsBanner.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACE16E62231584E70077B23D /* PushNotificationsBanner.xib */; };
+		ACE16E6D231585020077B23D /* CircularPro-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = ACE16E65231585020077B23D /* CircularPro-MediumItalic.otf */; };
+		ACE16E6E231585020077B23D /* MercuryTextG4-Roman-Pro.otf in Resources */ = {isa = PBXBuildFile; fileRef = ACE16E66231585020077B23D /* MercuryTextG4-Roman-Pro.otf */; };
+		ACE16E6F231585020077B23D /* MercuryTextG4-Italic-Pro.otf in Resources */ = {isa = PBXBuildFile; fileRef = ACE16E67231585020077B23D /* MercuryTextG4-Italic-Pro.otf */; };
+		ACE16E70231585020077B23D /* CircularPro-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = ACE16E68231585020077B23D /* CircularPro-Medium.otf */; };
+		ACE16E71231585020077B23D /* CircularPro-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = ACE16E69231585020077B23D /* CircularPro-BoldItalic.otf */; };
+		ACE16E72231585020077B23D /* CircularPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = ACE16E6A231585020077B23D /* CircularPro-Bold.otf */; };
+		ACE16E73231585020077B23D /* CircularPro-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = ACE16E6B231585020077B23D /* CircularPro-Book.otf */; };
+		ACE16E74231585020077B23D /* CircularPro-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = ACE16E6C231585020077B23D /* CircularPro-BookItalic.otf */; };
 		C707369822527A4800F9E3BB /* KUSVolumeControlTimerManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C707369722527A4800F9E3BB /* KUSVolumeControlTimerManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C707369A22527A6E00F9E3BB /* KUSVolumeControlTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C707369922527A6E00F9E3BB /* KUSVolumeControlTimerManager.m */; };
 		C70A6ACE2212EC53004B4F9C /* KUSDescribeConversationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C70A6ACD2212EC53004B4F9C /* KUSDescribeConversationTests.m */; };
@@ -458,6 +467,15 @@
 		6BBA02B9E3111B375725C25D /* Pods_KustomerExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KustomerExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F91D0EF26D550F6FA48F5E6 /* Pods-Kustomer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kustomer.release.xcconfig"; path = "Pods/Target Support Files/Pods-Kustomer/Pods-Kustomer.release.xcconfig"; sourceTree = "<group>"; };
 		A8B9C7F846CD493168479E0A /* Pods-KustomerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KustomerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KustomerTests/Pods-KustomerTests.release.xcconfig"; sourceTree = "<group>"; };
+		ACE16E62231584E70077B23D /* PushNotificationsBanner.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PushNotificationsBanner.xib; sourceTree = "<group>"; };
+		ACE16E65231585020077B23D /* CircularPro-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularPro-MediumItalic.otf"; sourceTree = "<group>"; };
+		ACE16E66231585020077B23D /* MercuryTextG4-Roman-Pro.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MercuryTextG4-Roman-Pro.otf"; sourceTree = "<group>"; };
+		ACE16E67231585020077B23D /* MercuryTextG4-Italic-Pro.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MercuryTextG4-Italic-Pro.otf"; sourceTree = "<group>"; };
+		ACE16E68231585020077B23D /* CircularPro-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularPro-Medium.otf"; sourceTree = "<group>"; };
+		ACE16E69231585020077B23D /* CircularPro-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularPro-BoldItalic.otf"; sourceTree = "<group>"; };
+		ACE16E6A231585020077B23D /* CircularPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularPro-Bold.otf"; sourceTree = "<group>"; };
+		ACE16E6B231585020077B23D /* CircularPro-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularPro-Book.otf"; sourceTree = "<group>"; };
+		ACE16E6C231585020077B23D /* CircularPro-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularPro-BookItalic.otf"; sourceTree = "<group>"; };
 		C707369722527A4800F9E3BB /* KUSVolumeControlTimerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KUSVolumeControlTimerManager.h; sourceTree = "<group>"; };
 		C707369922527A6E00F9E3BB /* KUSVolumeControlTimerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KUSVolumeControlTimerManager.m; sourceTree = "<group>"; };
 		C70A6ACD2212EC53004B4F9C /* KUSDescribeConversationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KUSDescribeConversationTests.m; sourceTree = "<group>"; };
@@ -773,6 +791,7 @@
 			children = (
 				63A4EDE51F0A968E00EA3852 /* Cells */,
 				C77880FD216CDBCC006375BC /* KUSMLFormValuesPickerView.h */,
+				ACE16E62231584E70077B23D /* PushNotificationsBanner.xib */,
 				C77880FE216CDBCC006375BC /* KUSMLFormValuesPickerView.m */,
 				6334BE4B1F0C600F00258DAF /* KUSAttributionToolbar.h */,
 				6334BE4C1F0C600F00258DAF /* KUSAttributionToolbar.m */,
@@ -893,6 +912,7 @@
 				636531A41F1BBAA100433A50 /* KustomerViewController.m */,
 				631E3F391F526C6000FAA33F /* KnowledgeBaseViewController.h */,
 				631E3F3A1F526C6000FAA33F /* KnowledgeBaseViewController.m */,
+				ACE16E64231585020077B23D /* Fonts */,
 				C7FAC305224B5E3500D6D659 /* Managers */,
 				6334BE401F0C52C400258DAF /* API */,
 				633D8FE81F23C96D00BAFAC9 /* DataSources */,
@@ -951,6 +971,21 @@
 				D624913E5C7AD4492EF0D39B /* Pods_KustomerTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ACE16E64231585020077B23D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				ACE16E65231585020077B23D /* CircularPro-MediumItalic.otf */,
+				ACE16E66231585020077B23D /* MercuryTextG4-Roman-Pro.otf */,
+				ACE16E67231585020077B23D /* MercuryTextG4-Italic-Pro.otf */,
+				ACE16E68231585020077B23D /* CircularPro-Medium.otf */,
+				ACE16E69231585020077B23D /* CircularPro-BoldItalic.otf */,
+				ACE16E6A231585020077B23D /* CircularPro-Bold.otf */,
+				ACE16E6B231585020077B23D /* CircularPro-Book.otf */,
+				ACE16E6C231585020077B23D /* CircularPro-BookItalic.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		C7FAC305224B5E3500D6D659 /* Managers */ = {
@@ -1244,13 +1279,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACE16E63231584E70077B23D /* PushNotificationsBanner.xib in Resources */,
+				ACE16E6E231585020077B23D /* MercuryTextG4-Roman-Pro.otf in Resources */,
+				ACE16E6D231585020077B23D /* CircularPro-MediumItalic.otf in Resources */,
 				C7544EE2226F59B5008C1C5E /* negativeColor@2x.png in Resources */,
 				C7544ECD226F59B5008C1C5E /* number3Gray@2x.png in Resources */,
 				C7544ECB226F59B5008C1C5E /* number5Gray@2x.png in Resources */,
 				631E3F381F52561E00FAA33F /* checkmark_image@2x.png in Resources */,
+				ACE16E74231585020077B23D /* CircularPro-BookItalic.otf in Resources */,
 				C7544ED2226F59B5008C1C5E /* emoji4Gray@2x.png in Resources */,
 				63270EA01F4D386D00E25BF5 /* error_icon@2x.png in Resources */,
 				63D9C1821F3046DA00999183 /* up_arrow@2x.png in Resources */,
+				ACE16E71231585020077B23D /* CircularPro-BoldItalic.otf in Resources */,
 				63D529851FB7CFA700B1B004 /* paperclip_icon@2x.png in Resources */,
 				63DC73621F57B44900683DE8 /* message_received.m4a in Resources */,
 				C7544EDA226F59B5008C1C5E /* thumbsDownGray@2x.png in Resources */,
@@ -1259,6 +1299,7 @@
 				C7544ECF226F59B5008C1C5E /* emoji1Gray@2x.png in Resources */,
 				C7544ED7226F59B5008C1C5E /* emoji3Color@2x.png in Resources */,
 				C7544ED5226F59B5008C1C5E /* number1Color@2x.png in Resources */,
+				ACE16E73231585020077B23D /* CircularPro-Book.otf in Resources */,
 				C7544ECA226F59B5008C1C5E /* emoji4Color@2x.png in Resources */,
 				C7544EDD226F59B5008C1C5E /* number2Gray@2x.png in Resources */,
 				C7544EDE226F59B5008C1C5E /* emoji5Gray@2x.png in Resources */,
@@ -1269,10 +1310,12 @@
 				C7544ECC226F59B5008C1C5E /* thumbsDownColor@2x.png in Resources */,
 				C7544ED8226F59B5008C1C5E /* emoji1Color@2x.png in Resources */,
 				C7544EAE226F3D87008C1C5E /* emojiTest@2x.png in Resources */,
+				ACE16E6F231585020077B23D /* MercuryTextG4-Italic-Pro.otf in Resources */,
 				D6CF21802178CA8B00126AAC /* away_image@2x.png in Resources */,
 				C7544EDC226F59B5008C1C5E /* number4Color@2x.png in Resources */,
 				C7544ED6226F59B5008C1C5E /* number5Color@2x.png in Resources */,
 				C7544EDB226F59B5008C1C5E /* thumbsUpGray@2x.png in Resources */,
+				ACE16E70231585020077B23D /* CircularPro-Medium.otf in Resources */,
 				C7544EC9226F59B5008C1C5E /* number3Color@2x.png in Resources */,
 				C7544EE0226F59B5008C1C5E /* thumbsUpColor@2x.png in Resources */,
 				C7544ED1226F59B5008C1C5E /* number4Gray@2x.png in Resources */,
@@ -1281,6 +1324,7 @@
 				C7544ED4226F59B5008C1C5E /* number1Gray@2x.png in Resources */,
 				C7544EDF226F59B5008C1C5E /* emoji2Color@2x.png in Resources */,
 				636531AF1F1C4B9700433A50 /* kusty@2x.png in Resources */,
+				ACE16E72231585020077B23D /* CircularPro-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
