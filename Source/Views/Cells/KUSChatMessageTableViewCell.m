@@ -131,7 +131,7 @@ static const CGFloat kTimestampTopPadding = 4.0;
 {
     CGFloat actualMaxWidth = MIN(kMaxBubbleWidth - kBubbleSidePadding * 2.0, maxWidth);
 
-    NSAttributedString *attributedString = [KUSText attributedStringFromText:text fontSize:[self fontSize]];
+    NSAttributedString *attributedString = [KUSText attributedStringFromText:text fontSize:[self fontSize]+0.5];
 
     CGSize maxSize = CGSizeMake(actualMaxWidth, 1000.0);
     CGRect boundingRect = [attributedString boundingRectWithSize:maxSize
@@ -244,6 +244,7 @@ static const CGFloat kTimestampTopPadding = 4.0;
         }   break;
     }
 
+    [_labelView setAccessibilityIdentifier:currentUser ? @"customerMessageLabel" : @"agentMessageLabel"];
     _errorButton.frame = (CGRect) {
         .origin.x = isRTL ? CGRectGetMaxX(_bubbleView.frame) + kMinBubbleHeight + 5.0 : _bubbleView.frame.origin.x - kMinBubbleHeight - 5.0,
         .origin.y = _bubbleView.frame.origin.y + (_bubbleView.frame.size.height - kMinBubbleHeight) / 2.0,
@@ -262,6 +263,7 @@ static const CGFloat kTimestampTopPadding = 4.0;
         .size.width = timestampWidth,
         .size.height = MAX([[self class] heightForTimestamp] - kTimestampTopPadding, 0.0)
     };
+    [_timestampLabel setAccessibilityIdentifier:currentUser ? @"customerMessageTimestampLabel" : @"agentMessageTimestampLabel"];
 }
 
 #pragma mark - Internal logic methods
@@ -300,8 +302,7 @@ static const CGFloat kTimestampTopPadding = 4.0;
     BOOL currentUser = KUSChatMessageSentByUser(_chatMessage);
 
     [_imageView setContentMode:UIViewContentModeScaleAspectFill];
-    [_imageView sd_setShowActivityIndicatorView:YES];
-    [_imageView sd_setIndicatorStyle:(currentUser ? UIActivityIndicatorViewStyleWhite : UIActivityIndicatorViewStyleGray)];
+    _imageView.sd_imageIndicator = currentUser ? SDWebImageActivityIndicator.whiteIndicator : SDWebImageActivityIndicator.grayIndicator;
     SDWebImageOptions options = SDWebImageHighPriority | SDWebImageScaleDownLargeImages | SDWebImageRetryFailed;
 
     KUSChatMessage *startingChatMessage = _chatMessage;
@@ -349,7 +350,7 @@ static const CGFloat kTimestampTopPadding = 4.0;
     switch (_chatMessage.type) {
         case KUSChatMessageTypeText: {
             _labelView.text = [KUSText attributedStringFromText:_chatMessage.body fontSize:[[self class] fontSize] color:textColor];
-
+            
             _imageView.image = nil;
             [_imageView sd_setImageWithURL:nil];
         }   break;

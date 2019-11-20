@@ -1,6 +1,24 @@
 # Changelog for Kustomer iOS SDK'
 
-## 0.2.3.6
+## 0.3.0
+
+Release Date: 11/08/2019
+
+* Removed stats call when pusher is connected
+* Chat initialization improvements
+* Removed frequent calls to sessions and messages
+* Fixed messages truncation issue for large messages
+
+## 0.2.4
+
+Release Date: 10/09/2019
+
+* You can now check business hours
+* Wrap chat Greeting text and Waiting text to multiple lines without truncation. 
+* Updated SDWebImage library version to 5.2.2
+* Removed SpinKit Library from pod file
+
+## 0.2.3
 Release Date: 06/28/2019
 
 * Wrap chat Greeting text to 2 lines and truncate past that. 
@@ -36,12 +54,6 @@ Release Date: 05/03/2019
 Release Date: 04/05/2019
 
 * Changes to Brand and Design
-
-## 0.1.39
-
-Release Date: 04/05/2019
-
-* Added support to remove Kustomer Branding using settings
 
 ## 0.1.38
 

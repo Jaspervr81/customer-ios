@@ -103,20 +103,19 @@
     self = [super init];
     if (self) {
         _userSession = userSession;
-        _chatMessagesDataSource = [[KUSChatMessagesDataSource alloc] initForNewConversationWithUserSession:_userSession];
+        _chatMessagesDataSource = [[KUSChatMessagesDataSource alloc] initForNewConversationWithUserSession:userSession formId:nil];
         _showBackButton = showBackButton;
-        
         _showNonBusinessHoursImage = ![_userSession.scheduleDataSource isActiveBusinessHours];
     }
     return self;
 }
 
-- (instancetype)initWithUserSession:(KUSUserSession *)userSession forNewSessionWithMessage:(NSString *)message
+- (instancetype)initWithUserSession:(KUSUserSession *)userSession forNewSessionWithMessage:(NSString *)message andFormId:(NSString *)formId
 {
     self = [super init];
     if (self) {
         _userSession = userSession;
-        _chatMessagesDataSource = [[KUSChatMessagesDataSource alloc] initForNewConversationWithUserSession:_userSession];
+        _chatMessagesDataSource = [[KUSChatMessagesDataSource alloc] initForNewConversationWithUserSession:userSession formId:formId];
         _showBackButton = NO;
         [_chatMessagesDataSource sendMessageWithText:message attachments:nil];
         [_userSession.chatSessionsDataSource setMessageToCreateNewChatSession:nil];
@@ -203,7 +202,8 @@
 
 
     [_chatMessagesDataSource addListener:self];
-    [_chatMessagesDataSource fetchLatest];
+    //TODO Swapna removing fetching of messages on view load
+//    [_chatMessagesDataSource fetchLatest];
     if (!_chatMessagesDataSource.didFetch) {
         [self showLoadingIndicator];
     }
@@ -248,7 +248,8 @@
         }
     }
 
-    [_userSession.chatSessionsDataSource updateLastSeenAtForSessionId:_chatSessionId completion:nil];
+    //TODO Swapna removing fetching of messages on view appear
+    //[_userSession.chatSessionsDataSource updateLastSeenAtForSessionId:_chatSessionId completion:nil];
     [_chatMessagesDataSource startListeningForTypingUpdate];
 }
 
@@ -604,7 +605,7 @@
         _chatSessionId = chatSession.oid;
         _chatMessagesDataSource = [_userSession chatMessagesDataSourceForSessionId:_chatSessionId];
     } else {
-        _chatMessagesDataSource = [[KUSChatMessagesDataSource alloc] initForNewConversationWithUserSession:_userSession];
+        _chatMessagesDataSource = [[KUSChatMessagesDataSource alloc] initForNewConversationWithUserSession:_userSession formId:nil];
         _chatSessionId = nil;
         self.inputBarView.allowsAttachments = NO;
         
@@ -708,7 +709,17 @@
     self.navigationController.interactivePopGestureRecognizer.enabled = _showBackButton;
     [_chatMessagesDataSource startListeningForTypingUpdate];
     
+    //Connecting to Presence channel after Customer Id is created for new user
+    [self connectToCustomerPresenceChannel];
+    
     [self.view setNeedsLayout];
+}
+
+- (void) connectToCustomerPresenceChannel {
+    NSString *customerId = [_userSession.chatSessionsDataSource _customerId];
+    if(customerId) {
+        [_userSession.pushClient connectToCustomerPresenceChannel:customerId];
+    }
 }
 
 - (void)chatMessagesDataSourceDidFetchSatisfactionForm:(KUSChatMessagesDataSource *)dataSource
